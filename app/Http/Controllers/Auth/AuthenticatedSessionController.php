@@ -2,37 +2,68 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class AuthenticatedSessionController extends Controller
 {
     /**
-     * Handle an incoming authentication request.
+     * User Login
      */
-    public function store(LoginRequest $request): Response
+    public function store(Request $request): JsonResponse
     {
-        $request->authenticate();
+        $validated = $request->validate([
+            // email Example: user@email.com
+            "email" => ["required", "string", "email"],
+            // password Example: password
+            "password" => ["required", "string"],
+        ]);
 
-        $request->session()->regenerate();
+        if (!Auth::attempt($validated)) {
+            return response()->json([
+                "status" => 401,
+                "success" => false,
+                "message" =>  "Bad Credentials"
+            ], 401);
+        } else {
+            $user = User::where("email", $request["email"])->first();
+            $token = $user->createToken("device_token")->plainTextToken;
 
-        return response()->noContent();
+            // Return a JSON response with the user details and token
+            if ($user->role === "firm") {
+                return response()->json([
+                    'message' => 'User registered successfully',
+                    "user" => $user->load("profile", "firmProfile"),
+                ], 201);
+            } elseif ($user->role === "lawyer") {
+                return response()->json([
+                    'message' => 'User registered successfully',
+                    "user" => $user->load("profile", "lawyerProfile"),
+                ], 201);
+            } else {
+                return response()->json([
+                    'message' => 'User registered successfully',
+                    "user" => $user->load("profile"),
+                ], 201);
+            }
+        }
     }
 
     /**
-     * Destroy an authenticated session.
+     * User Logout
      */
-    public function destroy(Request $request): Response
+    public function destroy(): JsonResponse
     {
-        Auth::guard('web')->logout();
+        $user = Auth::user();
+        $user->token()->delete();
 
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
-        return response()->noContent();
+        return response()->json([
+            "status" => 200,
+            "success" => true,
+            "message" => "Session terminated"
+        ]);
     }
 }

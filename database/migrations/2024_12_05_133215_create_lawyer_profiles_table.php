@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('lawyer_profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('uuid')->unique();
+            $table->string('user_uuid')->unique();
             $table->string('bar_certificate')->nullable();
             $table->string('bar_association')->nullable();
             $table->string('license_number')->nullable();

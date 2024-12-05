@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('firm_profiles', function (Blueprint $table) {
             $table->id();
-            $table->string('uuid')->unique();
-            $table->string('firm_name'); // Name of the law firm
+            $table->string('user_uuid')->unique();
+            $table->string('firm_name')->nullable();
             $table->string('registration_number')->nullable();
             $table->string('registration_date')->nullable();
             $table->string('expiration_date')->nullable();
