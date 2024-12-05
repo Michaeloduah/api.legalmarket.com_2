@@ -4,15 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Profile extends Model
+class LawyerProfile extends Model
 {
     protected $guarded = ['id'];
-    
+
     protected $hidden = [
         'id',
         'user_uuid',
     ];
-        
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_uuid', 'uuid');

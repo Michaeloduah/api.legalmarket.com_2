@@ -13,6 +13,13 @@ return new class extends Migration
     {
         Schema::create('profiles', function (Blueprint $table) {
             $table->id();
+            $table->string('user_uuid')->unique();
+            $table->string('job_title')->nullable();
+            $table->string('company_name')->nullable();
+            $table->string('skills')->nullable();
+            $table->string('years_of_experience')->nullable();
+            $table->string('certifications')->nullable();
+            $table->string('social_links')->nullable();
             $table->timestamps();
         });
     }
