@@ -18,13 +18,12 @@ return new class extends Migration
             $table->string('bar_association')->nullable();
             $table->string('license_number')->nullable();
             $table->string('license_issue_date')->nullable();
-            $table->string('license_expiry_data')->nullable();
+            $table->string('license_expiry_date')->nullable();
             $table->string('pratice_areas')->nullable();
             $table->string('years_of_experience')->nullable();
             $table->string('law_firm')->nullable();
             $table->string('status')->default('Pending');
             $table->string('availability')->nullable();
-            $table->string('graduation_year')->nullable();
             $table->string('professional_bio')->nullable();
             $table->string('documents')->nullable();
             $table->timestamps();

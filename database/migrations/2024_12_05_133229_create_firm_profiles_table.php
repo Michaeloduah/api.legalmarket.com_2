@@ -20,7 +20,6 @@ return new class extends Migration
             $table->string('expiration_date')->nullable();
             $table->string('contact_email')->nullable();
             $table->string('contact_phone')->nullable();
-            $table->string('website')->nullable();
             $table->string('office_address')->nullable();
             $table->string('practice_areas')->nullable();
             $table->string('employees')->nullable();

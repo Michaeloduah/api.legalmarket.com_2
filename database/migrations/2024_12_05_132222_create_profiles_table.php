@@ -19,7 +19,10 @@ return new class extends Migration
             $table->string('skills')->nullable();
             $table->string('years_of_experience')->nullable();
             $table->string('certifications')->nullable();
-            $table->string('social_links')->nullable();
+            $table->string('address')->nullable();
+            $table->string('profile_picture')->nullable();
+            $table->string('date_of_birth')->nullable();
+            $table->string('bio')->nullable();
             $table->timestamps();
         });
     }
